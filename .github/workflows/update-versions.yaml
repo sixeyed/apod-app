@@ -18,13 +18,15 @@ jobs:
         run: |
           echo "Updating image tags to: $TAG"          
 
+      - name: Install Kustomize
+        uses: imranismail/setup-kustomize@v1
+
       - name: Update image tags
         working-directory: kustomize/base
         run: |
-          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
-          ./kustomize edit set image image-of-the-day=sixeyed/image-of-the-day:$TAG          
-          ./kustomize edit set image access-log=sixeyed/access-log:$TAG          
-          ./kustomize edit set image image-gallery=sixeyed/image-gallery:$TAG
+          kustomize edit set image image-of-the-day=sixeyed/image-of-the-day:$TAG          
+          kustomize edit set image access-log=sixeyed/access-log:$TAG          
+          kustomize edit set image image-gallery=sixeyed/image-gallery:$TAG
 
       - name: Commit
         run: |          
