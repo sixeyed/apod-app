@@ -11,13 +11,17 @@ env:
   TAG: ${{ github.event.inputs.tag }}
 
 jobs:
-  echo:
+  update-tags:
     runs-on: ubuntu-latest
     steps:
       - name: Echo tag
         run: |
           echo "Updating image tags to: $TAG"
 
+      - name: Install Kustomize
+        run: |
+          sudo snap install kustomize
+          
       - name: Update image tags
         working-directory: kustomize/base
         run: |
