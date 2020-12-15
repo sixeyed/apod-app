@@ -15,7 +15,7 @@ kind: Deployment
 metadata:
   name: apod-api
 spec:
-  replicas: 3
+  replicas: 5
   selector:
     matchLabels:
       app: apod-api
