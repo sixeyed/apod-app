@@ -8,10 +8,10 @@ namespace: apod
 images:
 - name: access-log
   newName: sixeyed/access-log
-  newTag: v0.15
+  newTag: v3.0
 - name: image-gallery
   newName: sixeyed/image-gallery
-  newTag: v0.15
+  newTag: v3.0
 - name: image-of-the-day
   newName: sixeyed/image-of-the-day
-  newTag: v0.15
+  newTag: v3.0
