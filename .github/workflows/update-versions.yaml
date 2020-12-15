@@ -16,15 +16,12 @@ jobs:
     steps:
       - name: Echo tag
         run: |
-          echo "Updating image tags to: $TAG"
+          echo "Updating image tags to: $TAG"          
 
-      - name: Install Kustomize
-        run: |
-          sudo snap install kustomize
-          
       - name: Update image tags
         working-directory: kustomize/base
         run: |
+          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
           kustomize edit set image image-of-the-day=sixeyed/image-of-the-day:$TAG          
           kustomize edit set image access-log=sixeyed/access-log:$TAG          
           kustomize edit set image image-gallery=sixeyed/image-gallery:$TAG
@@ -33,6 +30,6 @@ jobs:
         run: |          
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add .kustomize/base/kustomization.yaml
+          git add ./kustomize/base/kustomization.yaml
           git commit -m "Updated tags to: $TAG"
           git push
