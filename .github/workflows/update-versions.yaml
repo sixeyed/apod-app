@@ -22,8 +22,8 @@ jobs:
         uses: imranismail/setup-kustomize@v1
 
       - name: Update image tags
-        working-directory: kustomize/base
         run: |
+          cd ./kustomize/base
           kustomize edit set image image-of-the-day=sixeyed/image-of-the-day:$TAG          
           kustomize edit set image access-log=sixeyed/access-log:$TAG          
           kustomize edit set image image-gallery=sixeyed/image-gallery:$TAG
