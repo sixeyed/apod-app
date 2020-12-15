@@ -7,9 +7,28 @@ on:
         description: "Image tags"
         required: true
 
+env:
+  TAG: ${{ github.event.inputs.tag }}
+
 jobs:
   echo:
     runs-on: ubuntu-latest
     steps:
       - name: Echo tag
-        run: echo '${{ github.event.inputs.tag }}'
+        run: |
+          echo "Updating image tags to: $TAG"
+
+      - name: Update image tags
+        working-directory: kustomize/base
+        run: |
+          kustomize edit set image image-of-the-day=sixeyed/image-of-the-day:$TAG          
+          kustomize edit set image access-log=sixeyed/access-log:$TAG          
+          kustomize edit set image image-gallery=sixeyed/image-gallery:$TAG
+
+      - name: Commit
+        run: |          
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .kustomize/base/kustomization.yaml
+          git commit -m "Updated tags to: $TAG"
+          git push
